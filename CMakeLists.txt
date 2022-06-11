@@ -14,3 +14,8 @@ target_include_directories(function-sampler INTERFACE
 )
 
 target_compile_options(function-sampler INTERFACE cxx_std_20)
+
+install(
+    DIRECTORY include
+    DESTINATION ${CMAKE_INSTALL_PREFIX}/include/
+)
