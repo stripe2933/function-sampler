@@ -3,8 +3,8 @@
 #include <bitset>
 #include <concepts>
 
-#include "concept/Point.hpp"
-#include "concept/Interval.hpp"
+#include "function-sampler/concept/Point.hpp"
+#include "function-sampler/concept/Interval.hpp"
 #include "Point.hpp"
 #include "Interval.hpp"
 

@@ -6,8 +6,8 @@
 #include <numbers>
 #include <concepts>
 
-#include "concept/Point.hpp"
-#include "concept/Interval.hpp"
+#include "function-sampler/concept/Point.hpp"
+#include "function-sampler/concept/Interval.hpp"
 #include "Point.hpp"
 #include "Interval.hpp"
 
@@ -99,7 +99,7 @@ namespace function_sampler{
          * @return std::optional<number_type> If the discontinuity detected, return the x value of discontinuity. Otherwise, return std::nullopt.
          */
         template <typename OutputIt>
-        std::optional<number_type> recursive_sampling(const function_type& function, const point_type& pa, const point_type& pb, uint depth, OutputIt output) const noexcept{
+        std::optional<number_type> recursive_sampling(const function_type& function, const point_type& pa, const point_type& pb, unsigned int depth, OutputIt output) const noexcept{
             const auto x_diff = pb.x - pa.x;
             if (depth > max_depth || x_diff < numerical_threshold){
                 return std::nullopt;
@@ -160,11 +160,11 @@ namespace function_sampler{
 
     public:
         number_type numerical_threshold = 1e-4; // the lower bound of a sampling interval; If the interval's length is less than this, stop sampling.
-        uint min_depth = 3; // the lower bound of a sampling depth; if depth is deeper than this, stop sampling.
-        uint max_depth = 8; // the upper bound of a sampling depth; if depth is shallower than this, continue sampling even if the other conditions. (ex. refinement, ...)
+        unsigned int min_depth = 3; // the lower bound of a sampling depth; if depth is deeper than this, stop sampling.
+        unsigned int max_depth = 8; // the upper bound of a sampling depth; if depth is shallower than this, continue sampling even if the other conditions. (ex. refinement, ...)
         number_type refinement_threshold = 0.05; // the upper bound of the adjusting points' refinement; if the refinement is greater than this, continue sampling.
         number_type infinity_threshold = 1e8; // the criterion for determining infinity
-        uint max_singularity_count = 500; // the max value of singularity count in a sampling; If the singularity count is more than this, stop sampling and throw error (exceptions::too_many_singularity).
+        unsigned int max_singularity_count = 500; // the max value of singularity count in a sampling; If the singularity count is more than this, stop sampling and throw error (exceptions::too_many_singularity).
 
         /**
          * @brief Sample a function points from a domain.
@@ -269,7 +269,7 @@ namespace function_sampler{
         template <typename VertexType, typename AdapterPP> requires
             std::is_convertible_v<AdapterPP, std::function<VertexType(point_type)>> // for perfect forwarding
         static void generate_segments(const std::vector<std::vector<point_type>>& sampled_points, std::vector<VertexType>& vertices, AdapterPP&& adapter) noexcept{
-            // vertices are two endpoints of the line segment
+            // plot_vertices are two endpoints of the line segment
             // each vertice count of continuous_points is 2 * continuous_points.size() - 2
             std::size_t vertex_count = std::reduce(sampled_points.cbegin(), sampled_points.cend(), 0, [](std::size_t counter, const auto& vec) { return counter + 2 * vec.size() - 2; });
             vertices.reserve(vertices.size() + vertex_count);

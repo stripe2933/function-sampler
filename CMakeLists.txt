@@ -10,12 +10,7 @@ cmake_minimum_required(VERSION 3.0)
 project(function-sampler)
 
 target_include_directories(function-sampler INTERFACE
-    ${CMAKE_SOURCE_DIR}/include
+    include
 )
 
-target_compile_options(function-sampler INTERFACE cxx_std_20)
-
-install(
-    DIRECTORY include
-    DESTINATION ${CMAKE_INSTALL_PREFIX}/include/
-)
+target_compile_features(function-sampler INTERFACE cxx_std_20)
